@@ -27,6 +27,6 @@ echo "Setting permissions..."
 chmod -R 777 /home/pi/
 
 echo "Done! Open http://your_raspberry_ip/ to manage your roms."
-echo "Also, you can copy roms over to /home/pi/<console_title>/roms folder via FTP, etc"
+echo "Also, you can copy roms over to /home/pi/<console_title>/roms folder via FTP, but remember to go to Rebuild Gamelist on web page after they have been copied over"
 echo "Remember to edit emulationstation system config file to your new rom location"
 echo "Please restart"
