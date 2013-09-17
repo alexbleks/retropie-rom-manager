@@ -13,19 +13,10 @@ mkdir /home/pi/GAMEBOY/roms
 mkdir /home/pi/GAMEBOY_COLOR
 mkdir /home/pi/GAMEBOY_COLOR/roms
 echo "Moving images to each folder..."
-mv imgs/NES.z* /home/pi/NES/roms/
-mv imgs/SNES.z* /home/pi/SNES/roms/
-mv imgs/GB.zip /home/pi/GAMEBOY/roms/
-mv imgs/GBC.zip /home/pi/GAMEBOY_COLOR/roms/
-unzip /home/pi/NES/roms/NES.zip
-unzip /home/pi/SNES/roms/SNES.zip
-unzip /home/pi/GAMEBOY/roms/GB.zip
-unzip /home/pi/GAMEBOY_COLOR/roms/GBC.zip
-echo "Cleaning up zip files..."
-rm /home/pi/NES/roms/NES.z*
-rm /home/pi/SNES/roms/SNES.z*
-rm /home/pi/GAMEBOY/roms/GB.z*
-rm /home/pi/GAMEBOY_COLOR/roms/GBC.z*
+mv imgs/NES/* /home/pi/NES/roms/
+mv imgs/SNES/* /home/pi/SNES/roms/
+mv imgs/GB/* /home/pi/GAMEBOY/roms/
+mv imgs/GBC/* /home/pi/GAMEBOY_COLOR/roms/
 echo "Copying apache config files..."
 cp apache/000-default /etc/apache2/sites-enabled
 echo "Copying database file..."
