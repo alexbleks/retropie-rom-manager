@@ -99,6 +99,57 @@ if (isset($_POST['gen_nes']))
 
 
 
+
+if (isset($_POST['gen_n64']))
+{
+
+	//	echo "Gen nes";x
+	
+	$fp = fopen("/home/pi/N64/roms/gamelist.xml", 'w');
+	fwrite($fp, "<gameList>\n");
+		
+	if ($handle = opendir('/home/pi/N64/roms/')) {
+	    while (false !== ($file = readdir($handle)))
+	    {
+	        if ($file != "." && $file != ".." &&  (  strtolower(substr($file, strrpos($file, '.') + 1)) == 'z64' || strtolower(substr($file, strrpos($file, '.') + 1) == 'v64' ) || strtolower(substr($file, strrpos($file, '.') + 1)) == 'n64' ))
+	        {
+		        $md5hash = GetMD5OfFile("N64/roms/" . $file);
+				$query = "SELECT * FROM games WHERE md5='".$md5hash."'";
+				$result = $db2->query($query);
+				while($row = $result->fetchArray())
+				{
+
+					fwrite($fp, "<game>\n");
+					$id = $row[0];
+				
+					$GameTitle = $row[1];
+					$ImageFile = $row[2];
+					$Desc = $row[4];
+					$ReleaseDate = $row[3];
+					$Developer = $row[6];
+					$Publisher = $row[7];
+					$Genre = $row[8];
+					$Players = $row[10];
+					$Console = $row[11];
+					fwrite($fp, "<path>/home/pi/N64/roms/".$file."</path>\n");
+					fwrite($fp, "<name>".$GameTitle."</name>\n");
+					fwrite($fp, "<desc>".$Desc."</desc>\n");
+					fwrite($fp, "<image>/home/pi/N64/roms/".$ImageFile."</image>\n");					
+					fwrite($fp, "</game>\n");
+					$counter++;
+							
+				}
+		
+	        }
+	    }
+	    closedir($handle);
+	}
+
+	fwrite($fp, "</gameList>\n");
+	fclose($fp);
+}
+
+
 if (isset($_POST['gen_snes']))
 {
 
@@ -266,10 +317,10 @@ shell_exec("sudo reboot");
 <title>Rebuild Game list</title>
 <title>RetroBox ROM Manager</title>
 <h1><center>Generate gamelist</center></h1><br>
-<center><a href="nes.php">Nintendo Entertainment System</a> | <a href="snes.php">Super Nintendo</a> | <a href="gameboy.php">Game Boy</a> | <a href="gameboy_color.php">Game Boy Color</a> | <a href="rebuild_gamelist.php">Rebuild Gamelist</a> | <a href="settings.php">Settings</a>
-<br></center>
+<?php include("menu.php"); ?>
 <hr>
 <center><input type="submit" name="gen_nes" value = "Generate NES Gamelist"><input type="submit" name="gen_snes" value = "Generate SNES Gamelist"><input type="submit" name="gen_gb" value = "Generate Game Boy Gamelist"><input type="submit" name="gen_gbc" value = "Generate Game Boy Color Gamelist">
+<input type="submit" name="gen_n64" value = "Generate Nintendo 64 Gamelist">
 <br>
 Building gamelist might take a few minutes depending on size of database.<br>Do NOT exit your browser until you are returned to this page (it will mess up your gamelist)<br><br>
 <br><br>

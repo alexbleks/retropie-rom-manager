@@ -86,8 +86,7 @@ if (isset($_POST['uploadSaveGame']))
 <title>Restore Save Gamet</title>
 <title>RetroBox ROM Manager</title>
 <h1><center>Restore Save Game</center></h1><br>
-<center><a href="nes.php">Nintendo Entertainment System</a> | <a href="snes.php">Super Nintendo</a> | <a href="gameboy.php">Game Boy</a> | <a href="gameboy_color.php">Game Boy Color</a> | <a href="rebuild_gamelist.php">Settings</a>
-<br></center>
+<?php include("menu.php"); ?>
 <hr>
 <br>
 <center><h3><?php echo "Restore '<font color=green>" . $FILENAME . "</font>' ".$fullConsoleName." save game"; ?></h3></center>

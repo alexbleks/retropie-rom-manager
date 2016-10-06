@@ -1,4 +1,5 @@
 <?php
+
 /*
 
 	RetroBox ROM Manager v0.1
@@ -19,14 +20,16 @@
 
 
 */
+
 ?>
+
 <html>
 <head>
 <style>
 body 
 {
 background-size: 100% auto;
-background-image:url('gameboy_bg.jpg');
+background-image:url('n64.png');
 background-repeat:no-repeat;
 background-attachment:fixed;
 }
@@ -34,7 +37,7 @@ background-attachment:fixed;
 </head>
 <body bgcolor="black" text="white" link="red" vlink="darkred">
 <title>RetroBox ROM Manager</title>
-<h1><center>Game Boy</center></h1><br>
+<h1><center>Nintendo 64</center></h1><br>
 <?php include("menu.php"); ?>
 <hr>
 <?php
@@ -56,7 +59,7 @@ class MyDB extends SQLite3
 
 function GetMD5OfFile($file)
 {
-	$md5File = "/home/pi/GAMEBOY/roms/" . $file;
+	$md5File = "/home/pi/N64/roms/" . $file;
 	//echo $md5File;
 	return md5_file($md5File);
 }
@@ -67,8 +70,8 @@ function CheckIfExistInDB($filename)
 {
 	$db2 = new MyDB();
 
-	$UploadedFileMD5 = md5_file("GAMEBOY/roms/".$filename);
-	$MD5HASH = md5_file("GAMEBOY/roms/".$filename);
+	$UploadedFileMD5 = md5_file("/home/pi/N64/roms/".$filename);
+	$MD5HASH = md5_file("/home/pi/N64/roms/".$filename);
 	$query = "SELECT * FROM games WHERE md5='".$UploadedFileMD5."'";
 	$result = $db2->query($query);
 	$counter = 0;
@@ -91,10 +94,21 @@ function CheckIfExistInDB($filename)
 $CONTINUE = false;
 $NEW_FILENAME;
 
-	$allowedExts = array("gb");
+	$allowedExts = array();
+	//$allowedExts = array("z64");
+	array_push($allowedExts,"v64");
+array_push($allowedExts,"z64");
+array_push($allowedExts,"n64");
+if (!isset($_FILES['file'])) {
+	echo "invalid file!!!!";
+	
+}
+else
+{
+
 	$temp = explode(".", $_FILES["file"]["name"]);
 	$extension = end($temp);
-
+	
 	if ( in_array($extension, $allowedExts))
 	{
 	  	if ($_FILES["file"]["error"] > 0)
@@ -104,14 +118,14 @@ $NEW_FILENAME;
 		else
 		{
 	  
-				if (file_exists("GAMEBOY/roms/" . $_FILES["file"]["name"]))
+				if (file_exists("/home/pi/N64/roms/" . $_FILES["file"]["name"]))
 				{
 					echo $_FILES["file"]["name"] . " already exists. ";
 				}
 				else
 				{
 				
-						move_uploaded_file($_FILES["file"]["tmp_name"],"GAMEBOY/roms/" . $_FILES["file"]["name"]);
+						move_uploaded_file($_FILES["file"]["tmp_name"],"N64/roms/" . $_FILES["file"]["name"]);
 						$CONTINUE = true;
 						$NEW_FILENAME = $_FILES["file"]["name"];
 					
@@ -123,16 +137,17 @@ $NEW_FILENAME;
 						//// this game is NOT in the database, create a md5hash tag with game_title named as filename
 							$db3 = new MyDB();
 							//$exec = "SELECT * FROM games";
-							$exec = 'INSERT INTO games (game_title,md5,console) VALUES ("' . $_FILES["file"]["name"] . '","'.GetMD5OfFile($_FILES["file"]["name"]).'","Nintendo Game Boy")';
-						//	echo $exec;
+							$exec = 'INSERT INTO games (game_title,md5,console) VALUES ("' . $_FILES["file"]["name"] . '","'.GetMD5OfFile($_FILES["file"]["name"]).'","Nintendo 64 (N64)")';
+							
+					
 				
 							$go = $db3->exec($exec);
-							printf("Game ROM copied and added to Database <a href=gameboy_view.php?hash=%s>Go HERE to edit game information</a>",GetMD5OfFile($NEW_FILENAME));
+							printf("Game ROM copied and added to Database <a href=n64_view.php?hash=%s>Go HERE to edit game information</a>",GetMD5OfFile($NEW_FILENAME));
 					}
 					else
 					{
 						
-						printf("Game ROM copied and created <a href=gameboy_view.php?hash=%s>Go HERE to edit game information</a>",GetMD5OfFile($NEW_FILENAME));
+						printf("Game ROM copied and created <a href=n64_view.php?hash=%s>Go HERE to edit game information</a>",GetMD5OfFile($NEW_FILENAME));
 					}
 				}	
 		}	  
@@ -142,5 +157,5 @@ $NEW_FILENAME;
 	{
 	  	echo "Invalid file";
 	}
-
+}
 ?>

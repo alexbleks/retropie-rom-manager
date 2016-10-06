@@ -43,7 +43,7 @@ class MyDB extends SQLite3
 body 
 {
 background-size: 100% auto;
-background-image:url('gameboy_color_bg.jpg');
+background-image:url('gbc_bg.jpg');
 background-repeat:no-repeat;
 background-attachment:fixed;
 }
@@ -53,8 +53,7 @@ background-attachment:fixed;
 <body bgcolor="black" text="white" link="white" vlink="white">
 <title>RetroBox ROM Manager</title>
 <h1><center>Game Boy Color</center></h1><br>
-<center><a href="nes.php">Nintendo Entertainment System</a> | <a href="snes.php">Super Nintendo</a> | <a href="gameboy.php">Game Boy</a> | <a href="gameboy_color.php">Game Boy Color</a> | <a href="rebuild_gamelist.php">Rebuild Gamelist</a> | <a href="settings.php">Settings</a>
-<br></center>
+<?php include("menu.php"); ?>
 <hr>
 <table bgcolor="orange">
 <tr>

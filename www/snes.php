@@ -53,8 +53,7 @@ background-attachment:fixed;
 <body bgcolor="black" text="white" link="yellow" vlink="yellow">
 <title>RetroBox ROM Manager</title>
 <h1><center>Super Nintendo</center></h1><br>
-<center><a href="nes.php">Nintendo Entertainment System</a> | <a href="snes.php">Super Nintendo</a> | <a href="gameboy.php">Game Boy</a> | <a href="gameboy_color.php">Game Boy Color</a> | <a href="rebuild_gamelist.php">Rebuild Gamelist</a> | <a href="settings.php">Settings</a>
-<br></center>
+<?php include("menu.php"); ?>
 <hr>
 
 <input type="file" name="file" id="file">

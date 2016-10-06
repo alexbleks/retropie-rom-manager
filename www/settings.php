@@ -27,8 +27,7 @@
 <title>Rebuild Game list</title>
 <title>RetroBox ROM Manager</title>
 <h1><center>Settings</center></h1><br>
-<center><a href="nes.php">Nintendo Entertainment System</a> | <a href="snes.php">Super Nintendo</a> | <a href="gameboy.php">Game Boy</a> | <a href="gameboy_color.php">Game Boy Color</a> | <a href="rebuild_gamelist.php">Settings</a>
-<br></center>
+<?php include("menu.php"); ?>
 <hr>
 <br>
 <center><h3>Select a pre-setup controller port (requires restart):</h3></center>

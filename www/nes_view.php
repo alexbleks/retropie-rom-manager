@@ -247,8 +247,7 @@ background-attachment:fixed;
 <form action="nes_view.php?hash=<?php echo $md5hash ?>" method="post" enctype="multipart/form-data">
 <title>RetroBox ROM Manager</title>
 <h1><center><font color=white>Nintendo Entertainment System</font></center></h1><br>
-<center><a href="nes.php">Nintendo Entertainment System</a> | <a href="snes.php">Super Nintendo</a> | <a href="gameboy.php">Game Boy</a> | <a href="gameboy_color.php">Game Boy Color</a> | <a href="rebuild_gamelist.php">Rebuild Gamelist</a> | <a href="settings.php">Settings</a>
-<br></center>
+<?php include("menu.php"); ?>
 <hr>
 <center><h2><?php echo "<font color=white>" . $GameTitle . "</font>"; ?></h2></center>
 <center><?php 

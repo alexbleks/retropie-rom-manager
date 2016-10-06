@@ -19,7 +19,6 @@
 
 
 */
-
 error_reporting(E_ALL);
 ini_set('display_errors','On');
 ini_set('post_max_size', '64M');
@@ -99,7 +98,7 @@ class MyDB extends SQLite3
 }
 	$db2 = new MyDB();
 
-if (isset($_POST["update_nes_game"]))
+if (isset($_POST["update_n64_game"]))
 {	
 	
 
@@ -136,14 +135,14 @@ if ((($_FILES["file"]["type"] == "image/gif")
     echo "Size: " . ($_FILES["file"]["size"] / 1024) . " kB<br>";
     echo "Temp file: " . $_FILES["file"]["tmp_name"] . "<br>";*/
 
-    if (file_exists("GAMEBOY_COLOR/roms/" . $_FILES["file"]["name"]))
+    if (file_exists("N64/roms/" . $_FILES["file"]["name"]))
       {
       echo $_FILES["file"]["name"] . " already exists. ";
       }
     else
       {
       move_uploaded_file($_FILES["file"]["tmp_name"],
-      "GAMEBOY_COLOR/roms/" . $_FILES["file"]["name"]);
+      "N64/roms/" . $_FILES["file"]["name"]);
 	
 		$exec = "UPDATE games SET image_file='" . $_FILES["file"]["name"] . "' WHERE md5='". $md5hash ."'";
 		$go = $db2->exec($exec);
@@ -151,7 +150,7 @@ if ((($_FILES["file"]["type"] == "image/gif")
 		
 		
 		// resize Image
-		$ImageFileName = "GAMEBOY_COLOR/roms/".$_FILES["file"]["name"];
+		/*$ImageFileName = "N64/roms/".$_FILES["file"]["name"];
 		$ImageSize = getimagesize($ImageFileName);
 		$ImageWidth =$ImageSize[0];
 		$ImageHeight = $ImageSize[1];
@@ -163,7 +162,7 @@ if ((($_FILES["file"]["type"] == "image/gif")
 		$newHeight =  (((float)$ImageHeight*(float)$newWidth/(float)$ImageWidth));
 		
 		//resize_image_max($ImageFileName,$newWidth,$newHeight);
-		resizeToVariable($ImageFileName,$newWidth, $newHeight, $ImageFileName);
+		resizeToVariable($ImageFileName,$newWidth, $newHeight, $ImageFileName);*/
 		
 		
       }
@@ -176,14 +175,15 @@ else
 }
 
 
-
+$counter = 0;
 $db = new MyDB();
 $query = "SELECT * FROM games WHERE md5='".$md5hash."'";
 $result = $db->query($query);
-$counter = 0;
+
 while($row = $result->fetchArray())
 {
-	$counter++;
+
+$counter++;
 	$id = $row[0];
 	$GameTitle = $row[1];
 	$ImageFile = $row[2];
@@ -199,12 +199,14 @@ while($row = $result->fetchArray())
 
 if ($counter == 0)
 {
-	$Console = "Game Boy Color";
 	// it does not exist in DB, create it!
-	$exec = 'INSERT INTO games (game_title,md5,console) VALUES ("No Title Yet","'. $md5hash .'", "Game Boy Color")';					
+	
+	$exec = 'INSERT INTO games (game_title,md5,console) VALUES ("No Title Yet","'. $md5hash .'", "Nintendo 64")';		
+	$Console = "Nintendo Entertainment System";
 	$go = $db->exec($exec);
 
-	
+
+
 $GameTitle = "No Title Yet";
 $ImageFile = "";
 $Desc = "";
@@ -223,7 +225,6 @@ while($row = $result->fetchArray())
 	$id = $row[0];
 }
 
-
 }
 
 
@@ -236,16 +237,16 @@ while($row = $result->fetchArray())
 body 
 {
 background-size: 100% auto;
-background-image:url('gbc_bg.jpg');
+background-image:url('n64.png');
 background-repeat:no-repeat;
 background-attachment:fixed;
 }
 </style>
 </head>
-<body bgcolor="black" text="black" link="white" vlink="white">
-<form action="gameboy_color_view.php?hash=<?php echo $md5hash; ?>" method="post" enctype="multipart/form-data">
+<body bgcolor="black" text="white" link="red" vlink="red">
+<form action="n64_view.php?hash=<?php echo $md5hash ?>" method="post" enctype="multipart/form-data">
 <title>RetroBox ROM Manager</title>
-<h1><center><font color=white>Game Boy Color</font></center></h1><br>
+<h1><center><font color=white>Nintendo Entertainment System</font></center></h1><br>
 <?php include("menu.php"); ?>
 <hr>
 <center><h2><?php echo "<font color=white>" . $GameTitle . "</font>"; ?></h2></center>
@@ -257,7 +258,7 @@ echo "<font color=yellow>Game saved! Remember to Click 'Rebuild Gamelist.xml' to
  ?></center>
 <?php
 
-	$ImgPathFile = "/GAMEBOY_COLOR/roms/".$ImageFile;
+	$ImgPathFile = "/N64/roms/".$ImageFile;
 
 ?>
 
@@ -269,7 +270,7 @@ echo "<font color=yellow>Game saved! Remember to Click 'Rebuild Gamelist.xml' to
 <img src=<?php echo $ImgPathFile;  ?>></img>
 </td>
 <td>
-<table bgcolor="#C9F549">
+<table>
 	<tr>
 		<td>Game title</td>
 		<td><input type="text" name="gametitle" value="<?php echo $GameTitle; ?>"></td>
@@ -312,7 +313,7 @@ echo "<font color=yellow>Game saved! Remember to Click 'Rebuild Gamelist.xml' to
 	</tr>
 		</tr>
 		<tr>
-		<td><input type="submit" name="update_nes_game" value="Update Game"></td>
+		<td><input type="submit" name="update_n64_game" value="Update Game"></td>
 	</tr>
 </table>
 </td>
@@ -325,7 +326,7 @@ echo "<font color=yellow>Game saved! Remember to Click 'Rebuild Gamelist.xml' to
 
 function GetMD5OfFile($file)
 {
-	$md5File = "/GAMEBOY_COLOR/roms/" . $file;
+	$md5File = "/N64/roms/" . $file;
 	//echo $md5File;
 	return md5_file($md5File);
 }
