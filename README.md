@@ -29,3 +29,4 @@ If you already have roms installed them move em into their respective console fo
 
 Remember to click Generate gamelist in manager web page after copyign is done.
 
+# retropie-rom-manager
